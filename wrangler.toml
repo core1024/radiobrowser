@@ -1,0 +1,19 @@
+name = "radiobrowser"
+type = "javascript"
+
+account_id = "d51cb30908630cf5f5551d71ca1c66a5"
+workers_dev = true
+route = ""
+zone_id = ""
+compatibility_date = "2022-02-16"
+
+[triggers]
+crons = ["1 0 */1 * *"]
+
+[build.upload]
+# Upload the code directly from the src directory.
+dir = "src"
+# The "modules" upload format is required for all projects that export a Durable Objects class
+format = "modules"
+main = "./index.mjs"
+
