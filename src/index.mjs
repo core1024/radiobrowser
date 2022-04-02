@@ -127,8 +127,8 @@ class RadioBrowserServer {
 			force ||
 			!RadioBrowserServer.#SERVER ||
 			RadioBrowserServer.#SERVER_LAST_UPDATED +
-				RadioBrowserServer.SERVER_UPDATE_INTERVAL <
-				Date.now()
+			RadioBrowserServer.SERVER_UPDATE_INTERVAL <
+			Date.now()
 		) {
 			RadioBrowserServer.#SERVER_LAST_UPDATED = Date.now()
 			const controller = new AbortController()
@@ -360,19 +360,16 @@ export default {
 				headers: { 'content-type': 'text/plain' },
 			})
 		const res = parseUrl(request.url)
-		if (!res)
-			return new Response('404 Not Found', {
-				status: 404,
-				statusText: 'Not Found',
-				headers: { 'content-type': 'text/plain' },
-			})
-		if (typeof addon[res.resource] === 'function')
+		if (res && typeof addon[res.resource] === 'function')
 			return new Response(
 				JSON.stringify(await addon[res.resource](res.params)),
 				{ headers },
 			)
-
-		return new Response(JSON.stringify(res), { headers })
+		return new Response('404 Not Found', {
+			status: 404,
+			statusText: 'Not Found',
+			headers: { 'content-type': 'text/plain' },
+		})
 	},
 	async scheduled(event, env, ctx) {
 		await fetch('https://api.strem.io/api/addonPublish', {
